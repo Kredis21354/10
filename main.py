@@ -1,30 +1,14 @@
-import requests
+import pymongo
 
-from bs4 import BeautifulSoup
+client = pymongo.MongoClient("mongodb+srv://retyp:12345@cluster0.iztqtnu.mongodb.net/?retryWrites=true&w=majority")
 
-URL = "https://coinmarketcap.com/"
+db = client["test"]
 
-res = requests.get(URL)
+col = db["test"]
 
-if res.status_code == 200:
-  soup = BeautifulSoup(res.text, features="html.parser")
-  info = soup.find_all("a", {"href":"/currencies/bitcoin/markets/"})
-  price = info[0].getText()
-  print(price)
-  
-  info = soup.find_all("p", {"class":"sc-e225a64a-0 ePTNty"})
-  name = info[0].getText()
-  print(name)
-  
-  info = soup.find_all("a", {"href":"/currencies/ethereum/markets/"})
-  price = info[0].getText()
-  print(price)
-  
-  info = soup.find_all("p", {"class":"sc-e225a64a-0 ePTNty"})
-  name = info[0].getText()
-  print(name)
-  
-  info = soup.find_all("a", {"href":"/currencies/tether/markets/"})
-  price = info[0].getText()
-  print(price)
+x = col.insert_one({"test":"My test data"})
+
+
+
+#mongodb+srv://retyp:<password>@cluster0.iztqtnu.mongodb.net/?retryWrites=true&w=majority
 
